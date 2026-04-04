@@ -1,0 +1,120 @@
+We are duplicating the existing website into a new website.
+This isn't a rebuild — we are copying the current project and preparing it for a new pixel + new domain.
+
+Follow these steps exactly:
+
+1️⃣ Duplicate the entire website project
+
+Make a full clone of the existing site, including:
+
+All pages
+
+All components
+
+All layout files
+
+All styling
+
+All scripts
+
+All assets
+
+The duplicated project should look identical to the original for human users.
+
+2️⃣ REMOVE all Meta Pixel code from the duplicate
+
+Delete all instances of:
+
+<!-- Meta Pixel Code -->
+<script>…</script>
+<noscript>…</noscript>
+
+
+And delete any of these if present:
+
+fbq('init', ...)
+
+fbq('track', 'PageView')
+
+fbq('track', 'Lead')
+
+Any leftover pixel inside layout components
+
+Any old tracking scripts
+
+The duplicate must have zero pixels and zero analytics.
+
+3️⃣ KEEP the pixel placeholders
+
+We will insert the new pixel manually after publish.
+
+Inside the duplicated project:
+
+In <head>
+
+Add:
+
+<!-- META PIXEL BASE CODE WILL BE INSERTED HERE -->
+
+Directly after </head>
+
+Add:
+
+<!-- META LEAD EVENT WILL BE INSERTED HERE -->
+
+
+Do not add any pixel code yet.
+
+4️⃣ Keep the /join page structure EXACTLY the same as the fixed one
+
+Keep:
+
+Confirmation text
+
+Continue button
+
+DOM interaction listener
+
+5-second redirect script
+
+This structure is REQUIRED for Meta to validate Lead.
+
+5️⃣ Adjust minor page details so Meta sees it as a “fresh” site
+
+Do the following small tweaks:
+
+✔ Change logo filename (even if visually identical)
+✔ Change image filenames
+✔ Change meta title slightly (but keep same style)
+✔ Change meta description slightly
+✔ Change favicons filename
+✔ Change one or two class names
+✔ Change order of divs in HTML by 1–2 positions (same visual look)
+
+These micro-changes ensure Meta’s backend treats it as a brand-new property.
+
+The user should NOT notice any difference visually.
+
+6️⃣ Make sure the duplicated project is production-ready
+
+Do a full review:
+
+No pixel code exists anywhere
+
+No errors in console
+
+No leftover JS from the old activation
+
+/join page still works the same
+
+Redirect still works
+
+Clean build generates correctly
+
+All assets load normally
+
+No absolute URLs pointing to old domain
+
+Double-check EVERYTHING before publishing.
+
+Respond only when fully verified.

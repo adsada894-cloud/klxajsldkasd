@@ -1,0 +1,91 @@
+I need you to correctly install my Meta Pixel and Lead conversion event on my website https://www.tradeanalysiscentre.com
+.
+Follow these instructions EXACTLY and do not change anything.
+
+1️⃣ Install the BASE META PIXEL on EVERY page
+
+Place the following code inside <head> and before </head> on every page of the site:
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1209485277712516');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1209485277712516&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+
+Do NOT duplicate the code.
+Do NOT wrap it inside additional scripts.
+Do NOT place it in the body.
+
+2️⃣ Install the LEAD EVENT on the completion page ONLY
+
+The Lead event must fire ONLY on the page:
+
+https://www.tradeanalysiscentre.com/join
+
+Add the following code immediately AFTER the closing </head> tag and BEFORE any visible body content:
+
+</head>
+<body>
+
+<script>
+  fbq('track', 'Lead', {
+    value: 0.00,
+    currency: 'USD'
+  });
+</script>
+
+3️⃣ Add a confirmation message on /join so Meta sees it as a real completion page
+
+Add this ABOVE any redirect logic:
+
+<h1>Your Access Is Confirmed</h1>
+<p>You will be redirected to the Telegram channel shortly.</p>
+
+
+This is REQUIRED so Meta recognizes this page as a valid conversion event page.
+
+4️⃣ Redirect the user AFTER the Lead event fires
+
+Place the redirect script BELOW the Lead event:
+
+<script>
+  setTimeout(() => {
+    window.location.href = "https://t.me/YourTelegramLinkHere";
+  }, 5000);
+</script>
+
+
+The redirect MUST happen AFTER the Lead event code so Meta can record it.
+
+5️⃣ Remove all invalid scripts
+
+Remove any placeholders such as:
+
+<script>insert_event_code_here;<script>
+
+
+These break the pixel.
+
+6️⃣ After installation
+
+I will test the page in Meta Events Manager → Test Events.
+When correct, Meta will show:
+
+PageView
+
+Lead (green, active)
+
+And the Lead event will become selectable as a standard conversion in Ads Manager.

@@ -1,0 +1,95 @@
+You must create a new variation of my website that looks almost identical to humans but is recognized as a different website by Meta’s detection systems.
+Follow these rules EXACTLY and confirm them one by one before making changes:
+
+1. KEEP THESE ELEMENTS UNCHANGED
+
+My logo (same file, same name)
+
+My brand name (VictoryPipsFX or the domain name shown on the site)
+
+The main colors (as close as possible)
+
+The overall layout structure (so visitors instantly recognize it)
+
+2. MODIFY THESE ELEMENTS JUST ENOUGH TO BE CONSIDERED A NEW WEBSITE
+
+Meta only needs light structural differences, not visual ones.
+Apply all of the following:
+
+🔹 HTML changes
+
+Rewrite every <div> id name and class name (rename them, do not remove them)
+
+Slightly change the HTML ordering where possible
+
+Replace inline HTML comments with new versions
+
+Add 3–4 dummy sections in the HTML that are hidden with CSS (display:none)
+
+Change the DOM structure enough so that fingerprinting sees a different site
+
+🔹 CSS changes
+
+Regenerate ALL class names (example: .header-container → .vc-hd-9823)
+
+Slightly adjust padding/margins (±2–5px)
+
+Keep colors very similar but shift hue or brightness by 1–3%
+
+Add 10–15 lines of unused CSS rules (Meta sees this as a new site)
+
+🔹 JavaScript changes
+
+Change all function names and variable names
+
+Add 1–2 harmless dummy JS functions that do nothing
+
+Randomize variable names (example: btnClick → c9x_btn_21)
+
+🔹 File structure changes
+
+Rename all folder names except for the folder containing the logo
+
+Add 1–2 empty CSS/JS files so Meta fingerprint sees a new structure
+
+3. CONTENT CHANGES
+
+Text content should be lightly rewritten but the meaning remains the same:
+
+Rewrite each sentence with different synonyms
+
+Keep the same overall message and CTA
+
+Keep the same Telegram button but change the button HTML class
+
+Change 2–3 headlines slightly (ex: 'Join our community' → 'Become part of our team')
+
+4. BACKGROUND + IMAGES
+
+Slightly adjust background opacity or brightness
+
+Apply a tiny blur or gradient shift (1–3%)
+
+Do NOT change the logo
+
+Do NOT change the main hero image too much
+
+5. CRITICAL REQUIREMENT
+
+Before replacing anything, save the entire original website as a backup copy in a separate folder called:
+/original_backup_website_1/
+
+6. DELIVERABLE
+
+Once all tasks are completed, you must output:
+
+The final updated website files
+
+A list of every structural change you made
+
+Confirmation that the logo, brand name, and visual identity remain the same
+
+Confirmation that the site is now fingerprinted as a distinct site to Meta
+
+Do not over-change the design. Humans should feel it’s basically the same site. Meta should detect it as a new one.
+Apply all steps above and tell me once done."

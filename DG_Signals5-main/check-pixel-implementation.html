@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Meta Pixel Debug Test</title>
+  <!-- Meta Pixel Code - Exactly as in your site -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '742825665410650');
+  fbq('track', 'PageView');
+  
+  // Debug logging
+  window.addEventListener('load', function() {
+    console.log('=== META PIXEL DEBUG ===');
+    console.log('fbq function exists:', typeof fbq !== 'undefined');
+    console.log('_fbq object exists:', typeof window._fbq !== 'undefined');
+    
+    // Check if pixel library loaded
+    if (typeof fbq !== 'undefined') {
+      console.log('✅ Pixel library loaded successfully');
+      console.log('Pixel version:', fbq.version);
+      console.log('Pixel queue length:', fbq.queue ? fbq.queue.length : 'N/A');
+    } else {
+      console.log('❌ Pixel library NOT loaded');
+    }
+  });
+  </script>
+</head>
+<body>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=742825665410650&ev=PageView&noscript=1"
+  /></noscript>
+  <h1>Pixel Debug Test</h1>
+  <p>Check console for pixel status</p>
+  <button onclick="fbq('track', 'Lead'); console.log('Lead event triggered');">Test Lead Event</button>
+</body>
+</html>

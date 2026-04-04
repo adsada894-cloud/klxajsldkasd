@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Success</title>
+  <meta name="description" content="Your access has been confirmed." />
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1626916708298868');
+  // fbq('track','PageView'); // now handled by capiSend
+  </script>
+  <!-- End Meta Pixel Code -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #111827, #000000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 1rem;
+    }
+    .confirmation-container {
+      max-width: 28rem;
+      width: 100%;
+      background: rgba(31, 41, 55, 0.49);
+      backdrop-filter: blur(12px);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+    .icon-circle {
+      width: 4rem;
+      height: 4rem;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: linear-gradient(to right, #06b6d4, #14b8a6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-circle svg { width: 2rem; height: 2rem; color: white; }
+    h1 { color: white; font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; }
+    p { color: #d1d5db; margin-bottom: 1.5rem; }
+    .countdown { color: #22d3ee; font-size: 1.125rem; margin-bottom: 1.5rem; }
+    .countdown span { font-weight: 700; }
+    #continue-btn {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(to right, #06b6d4, #14b8a6);
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: opacity 0.2s;
+    }
+    #continue-btn:hover { opacity: 0.9; }
+    .footer-text { color: #6b7280; font-size: 0.875rem; margin-top: 1rem; }
+  </style>
+
+<script>
+  function capiSend(event_name) {
+    try {
+      var event_id = (crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : (Date.now() + "_" + Math.random().toString(16).slice(2));
+      fetch("/.netlify/functions/meta-capi", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          event_name: event_name,
+          event_id: event_id,
+          event_source_url: location.href,
+          user_agent: navigator.userAgent
+        }),
+        keepalive: true
+      });
+      if (typeof fbq === "function") {
+        fbq("track", event_name, {}, { eventID: event_id });
+      }
+    } catch (e) {}
+  }
+</script>
+<script>capiSend("PageView");</script>
+</head>
+<body>
+
+<script>
+  // fbq('track','Lead'); // now handled by capiSend
+      capiSend('Lead');
+</script>
+
+<noscript>
+  <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1626916708298868&ev=PageView&noscript=1" />
+</noscript>
+
+<div id="confirmation-box-dg4" class="confirmation-container">
+  <div class="icon-circle">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+    </svg>
+  </div>
+  <h1>Success — Your Access Is Confirmed</h1>
+  <p>You will be redirected to our Telegram channel shortly.</p>
+  <div class="countdown">
+    Redirecting in <span id="timer-dg4">5</span> seconds...
+  </div>
+  <button id="continue-btn-dg4">Continue Now</button>
+  <p class="footer-text">Click the button above if you're not redirected automatically.</p>
+</div>
+
+<div style="height:1px;opacity:0;" data-success-fp="dg4" aria-hidden="true"></div>
+
+<script>
+document.getElementById("continue-btn-dg4").addEventListener("click", function() {
+  console.log("Lead confirmation interaction registered.");
+  window.location.href = "https://t.me/+wrdCCR1ReiAyYzVk";
+});
+</script>
+
+<script>
+  var timeLeft = 5;
+  var timerEl = document.getElementById("timer-dg4");
+  var countdown = setInterval(function() {
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      window.location.href = "https://t.me/+wrdCCR1ReiAyYzVk";
+    }
+  }, 1000);
+</script>
+
+<div style="opacity:0;height:1px;" data-fp="dg5" aria-hidden="true"></div>
+</body>
+</html>
