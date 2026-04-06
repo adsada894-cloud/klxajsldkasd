@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +9,7 @@
     <meta property="og:title" content="Welcome" />
     <meta property="og:description" content="Join our community." />
     <meta property="og:type" content="website" />
-    <!-- Meta Pixel Code -->
+
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -19,50 +19,63 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
+    
+    // Birinci Pixel
     fbq('init', '1626916708298868');
-    // fbq('track','PageView'); // now handled by capiSend
+    // İkinci Pixel (Yeni Eklenen)
+    fbq('init', '1445233537066661');
+    
+    // Sayfa Görüntüleme takibi (CAPI üzerinden yönetiliyor)
     </script>
-    <!-- End Meta Pixel Code -->
-  
-<script>
-  function capiSend(event_name) {
-    try {
-      var event_id = (crypto && crypto.randomUUID)
-        ? crypto.randomUUID()
-        : (Date.now() + "_" + Math.random().toString(16).slice(2));
-      fetch("/.netlify/functions/meta-capi", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          event_name: event_name,
-          event_id: event_id,
-          event_source_url: location.href,
-          user_agent: navigator.userAgent
-        }),
-        keepalive: true
-      });
-      if (typeof fbq === "function") {
-        fbq("track", event_name, {}, { eventID: event_id });
-      }
-    } catch (e) {}
-  }
-</script>
-<script>capiSend("PageView");</script>
+    <script>
+    function capiSend(event_name) {
+        try {
+            var event_id = (crypto && crypto.randomUUID)
+                ? crypto.randomUUID()
+                : (Date.now() + "_" + Math.random().toString(16).slice(2));
+            
+            // Sunucuya (CAPI) gönder
+            fetch("/.netlify/functions/meta-capi", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                    event_name: event_name,
+                    event_id: event_id,
+                    event_source_url: location.href,
+                    user_agent: navigator.userAgent
+                }),
+                keepalive: true
+            });
+
+            // Tarayıcı üzerinden her iki Pixel için de takip et
+            if (typeof fbq === "function") {
+                fbq("track", event_name, {}, { eventID: event_id });
+            }
+        } catch (e) {}
+    }
+    
+    // Sayfa yüklendiğinde tetikle
+    capiSend("PageView");
+    </script>
 </head>
-  <body>
+
+<body>
     <noscript>
-      <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=1626916708298868&ev=PageView&noscript=1" />
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1626916708298868&ev=PageView&noscript=1" />
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1445233537066661&ev=PageView&noscript=1" />
     </noscript>
+
     <div id="root"></div>
     <div style="height:1px;opacity:0;" data-fp="dg5" aria-hidden="true"></div>
+    
     <script type="module" src="/src/main.tsx"></script>
-  <script>
-  document.addEventListener("click", function(e) {
-    var el = e.target.closest("[data-track-lead]");
-    if (!el) return;
-    capiSend("Lead");
-  });
-</script>
+
+    <script>
+    document.addEventListener("click", function(e) {
+        var el = e.target.closest("[data-track-lead]");
+        if (!el) return;
+        capiSend("Lead");
+    });
+    </script>
 </body>
 </html>
