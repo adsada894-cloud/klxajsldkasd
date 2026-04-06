@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome</title>
     <meta name="description" content="Join our community." />
-    <meta property="og:title" content="Welcome" />
-    <meta property="og:description" content="Join our community." />
-    <meta property="og:type" content="website" />
 
     <script>
     !function(f,b,e,v,n,t,s)
@@ -20,42 +17,55 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     
-    // Birinci Pixel
+    // Pixel Tanımlamaları
     fbq('init', '1626916708298868');
-    // İkinci Pixel (Yeni Eklenen)
     fbq('init', '1445233537066661');
-    
-    // Sayfa Görüntüleme takibi (CAPI üzerinden yönetiliyor)
     </script>
     <script>
-    function capiSend(event_name) {
+    /**
+     * Gelişmiş CAPI ve Pixel Gönderim Fonksiyonu
+     * test_event_code: TEST27679 entegre edildi.
+     */
+    function capiSend(event_name, custom_data = {}) {
         try {
+            // Benzersiz Event ID oluşturma (Deduplication için kritik)
             var event_id = (crypto && crypto.randomUUID)
                 ? crypto.randomUUID()
                 : (Date.now() + "_" + Math.random().toString(16).slice(2));
             
-            // Sunucuya (CAPI) gönder
-            fetch("/.netlify/functions/meta-capi", {
-                method: "POST",
-                headers: { "content-type": "application/json" },
-                body: JSON.stringify({
-                    event_name: event_name,
-                    event_id: event_id,
-                    event_source_url: location.href,
-                    user_agent: navigator.userAgent
-                }),
-                keepalive: true
-            });
+            // Sunucuya (CAPI) gidecek veri paketi
+            var payload = {
+                event_name: event_name,
+                event_id: event_id,
+                event_source_url: window.location.href,
+                user_agent: navigator.userAgent,
+                test_event_code: "TEST27679", // Test paneli için zorunlu kod
+                custom_data: custom_data
+            };
 
-            // Tarayıcı üzerinden her iki Pixel için de takip et
+            // API İsteği (Vercel/Next.js yapısına uygun genel yol)
+            fetch("/api/meta-capi", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+                keepalive: true
+            }).catch(function(err) { console.log("CAPI Error:", err); });
+
+            // Tarayıcı Pixel Takibi
             if (typeof fbq === "function") {
-                fbq("track", event_name, {}, { eventID: event_id });
+                fbq('track', event_name, custom_data, { eventID: event_id });
             }
-        } catch (e) {}
+        } catch (e) {
+            console.error("Tracking Error:", e);
+        }
     }
     
-    // Sayfa yüklendiğinde tetikle
-    capiSend("PageView");
+    // Sayfa yüklendiğinde hem PageView hem ViewContent (E-ticaret için) gönder
+    window.addEventListener('DOMContentLoaded', function() {
+        capiSend("PageView");
+        // E-ticaret seçtiğin için ana sayfa görüntülemesini içerik olarak bildirir
+        capiSend("ViewContent", { content_name: "Homepage", content_category: "Landing" });
+    });
     </script>
 </head>
 
@@ -72,9 +82,18 @@
 
     <script>
     document.addEventListener("click", function(e) {
-        var el = e.target.closest("[data-track-lead]");
-        if (!el) return;
-        capiSend("Lead");
+        // Lead butonu kontrolü
+        var leadEl = e.target.closest("[data-track-lead]");
+        if (leadEl) {
+            capiSend("Lead", { content_name: leadEl.innerText || "Lead Button" });
+            return;
+        }
+
+        // E-ticaret için Sepete Ekle butonu kontrolü (Opsiyonel: butonuna data-track-cart ekleyebilirsin)
+        var cartEl = e.target.closest("[data-track-cart]");
+        if (cartEl) {
+            capiSend("AddToCart", { currency: "USD", value: 0.00 });
+        }
     });
     </script>
 </body>
